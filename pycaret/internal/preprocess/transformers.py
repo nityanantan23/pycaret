@@ -139,13 +139,7 @@ class TransformerWrapper(BaseEstimator, TransformerMixin):
 
             # Add all derivative columns: cols that originate from another
             # and start with its progenitor name, e.g. one-hot encoded columns
-            columns.extend(
-                [
-                    c
-                    for c in df.columns
-                    if c.startswith(f"{col}_") and c not in original_df
-                ]
-            )
+            columns.extend(list(df.columns[df.columns.str.startswith(f"{col}_")]))
 
         # Add remaining new columns (non-derivatives)
         columns.extend([col for col in df if col not in columns])
